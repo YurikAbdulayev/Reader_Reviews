@@ -45,7 +45,7 @@ public class ApiManager {
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(C.BASE_URL + C.VERSION)
                     .client(client)
-                    .addConverterFactory(GsonConverterFactory.create(defaultGsob()))
+                    .addConverterFactory(GsonConverterFactory.create(defaultGson()))
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .build();
             sInsatnce = retrofit.create(ApiService.class);
@@ -54,7 +54,7 @@ public class ApiManager {
     }
 
     @NonNull
-    private static Gson defaultGsob() {
+    private static Gson defaultGson() {
         return new GsonBuilder().setDateFormat(DateUtils.DATE_SCHEME).create();
     }
 }

@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Reader_Reviews</string>
     <string name="api_key">d43a7cd4267e4da410a05011879a9e7d:1:74541831</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="btn_retry">retry</string>
+    <string name="retry_hint">An error occured. Do you want to retry?</string>
 </resources>

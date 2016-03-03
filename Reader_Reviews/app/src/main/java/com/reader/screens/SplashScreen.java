@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.reader.R;
+import com.reader.screens.activity.MainActivity;
 
 /**
  * Created by yurik on 26.02.16.

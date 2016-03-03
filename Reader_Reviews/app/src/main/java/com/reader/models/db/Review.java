@@ -1,60 +1,49 @@
-package com.reader.models.network;
-
-import com.google.gson.annotations.SerializedName;
+package com.reader.models.db;
 
 import java.util.Date;
-import java.util.List;
+
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
- * Created by yurik on 26.02.16.
+ * Created by yurik on 29.02.16.
  */
-public class NetworkReview {
+public class Review extends RealmObject {
 
-    @SerializedName("nyt_movie_id")
-    private int nytMovieId;
+    @PrimaryKey
+    private int movieId;
 
-    @SerializedName("display_title")
     private String displayTitle;
 
-    @SerializedName("mpaa_rating")
     private String mpaaRating;
 
-    @SerializedName("byline")
     private String byLine;
 
-    @SerializedName("headline")
     private String headLine;
 
-    @SerializedName("summary_short")
     private String summaryShort;
 
-    @SerializedName("publication_date")
     private Date publicationDate;
 
-    @SerializedName("opening_date")
     private Date openingDate;
 
-    @SerializedName("date_updated")
     private Date dateUpdated;
 
-    @SerializedName("seo_name")
     private String seoName;
 
-    @SerializedName("related_urls")
-    private List<NetworkLink> relatedUrls;
+    private RealmList<Link> relatedUrls;
 
-    @SerializedName("link")
-    private NetworkLink networkLink;
+    private Link link;
 
-    @SerializedName("multimedia")
-    private NetworkMultimedia networkMultimedia;
+    private Multimedia multimedia;
 
-    public int getNytMovieId() {
-        return nytMovieId;
+    public int getMovieId() {
+        return movieId;
     }
 
-    public void setNytMovieId(int nytMovieId) {
-        this.nytMovieId = nytMovieId;
+    public void setMovieId(int movieId) {
+        this.movieId = movieId;
     }
 
     public String getDisplayTitle() {
@@ -129,27 +118,27 @@ public class NetworkReview {
         this.seoName = seoName;
     }
 
-    public List<NetworkLink> getRelatedUrls() {
+    public RealmList<Link> getRelatedUrls() {
         return relatedUrls;
     }
 
-    public void setRelatedUrls(List<NetworkLink> relatedUrls) {
+    public void setRelatedUrls(RealmList<Link> relatedUrls) {
         this.relatedUrls = relatedUrls;
     }
 
-    public NetworkLink getNetworkLink() {
-        return networkLink;
+    public Link getLink() {
+        return link;
     }
 
-    public void setNetworkLink(NetworkLink networkLink) {
-        this.networkLink = networkLink;
+    public void setLink(Link link) {
+        this.link = link;
     }
 
-    public NetworkMultimedia getNetworkMultimedia() {
-        return networkMultimedia;
+    public Multimedia getMultimedia() {
+        return multimedia;
     }
 
-    public void setNetworkMultimedia(NetworkMultimedia networkMultimedia) {
-        this.networkMultimedia = networkMultimedia;
+    public void setMultimedia(Multimedia multimedia) {
+        this.multimedia = multimedia;
     }
 }

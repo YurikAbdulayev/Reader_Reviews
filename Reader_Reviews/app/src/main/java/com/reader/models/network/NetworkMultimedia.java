@@ -9,16 +9,25 @@ import java.util.List;
  */
 public class NetworkMultimedia {
 
-    @SerializedName("resource")
-    private List<NetworkResource> resources;
+    private int movieReviewId;
 
-    public List<NetworkResource> getResources() {
+    @SerializedName("resource")
+    private NetworkResource resources;
+
+    public NetworkResource getResources() {
         return resources;
     }
 
-    public void setResources(List<NetworkResource> resources) {
+    public void setResources(NetworkResource resources) {
         this.resources = resources;
     }
 
+    public int getMovieReviewId() {
+        return movieReviewId;
+    }
+
+    public void setMovieReviewId(int movieReviewId) {
+        this.movieReviewId = movieReviewId;
+    }
 
 }
