@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import butterknife.ButterKnife;
+import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -28,4 +29,9 @@ public class BaseActivity extends AppCompatActivity {
         ButterKnife.unbind(this);
         super.onDestroy();
     }
+
+    protected void addSubscription(Subscription subscription) {
+        mCompositeSubscription.add(subscription);
+    }
+
 }

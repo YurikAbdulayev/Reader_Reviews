@@ -30,7 +30,7 @@ public class ItemDecorationAlbumColumns extends RecyclerView.ItemDecoration {
             outRect.top = mSizeGridSpacingPx / 2;
         }
         if (itemPosition % mGridSize == 0) {
-            outRect.left = mSizeGridSpacingPx;
+            outRect.left = mSizeGridSpacingPx / 2;
             outRect.right = mSizeGridSpacingPx / 2;
             mNeedLeftSpacing = true;
         } else if ((itemPosition + 1) % mGridSize == 0) {
@@ -48,7 +48,7 @@ public class ItemDecorationAlbumColumns extends RecyclerView.ItemDecoration {
         } else if ((itemPosition + 2) % mGridSize == 0) {
             mNeedLeftSpacing = false;
             outRect.left = mSizeGridSpacingPx / 2;
-            outRect.right = mSizeGridSpacingPx - padding;
+            outRect.right = mSizeGridSpacingPx;
         } else {
             mNeedLeftSpacing = false;
             outRect.left = mSizeGridSpacingPx / 2;
