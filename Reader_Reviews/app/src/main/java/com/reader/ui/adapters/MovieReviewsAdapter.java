@@ -35,6 +35,10 @@ public class MovieReviewsAdapter extends RecyclerView.Adapter<MovieReviewsAdapte
         mReviews = reviews;
     }
 
+    public void updateList(List<Review> reviews){
+        mReviews = reviews;
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(parent.getContext())

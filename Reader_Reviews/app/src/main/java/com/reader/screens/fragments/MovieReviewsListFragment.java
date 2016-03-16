@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewPropertyAnimator;
 import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -54,6 +55,8 @@ public class MovieReviewsListFragment extends BaseFragment
     SwipeRefreshLayout mSwipeRefreshLayout;
 
     private ReviewsListViewManager mReviewsListViewManager;
+    private boolean isAnimating;
+    private boolean isAnimated;
 
     public MovieReviewsListFragment() {
 
@@ -80,28 +83,6 @@ public class MovieReviewsListFragment extends BaseFragment
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.getViewTreeObserver()
-                .addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                mRecyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
-                for (int i = 0; i < mRecyclerView.getChildCount(); i++) {
-                    Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.right_to_left);
-                    animation.setDuration(200 * (i + 1));
-                    mRecyclerView.getChildAt(i).startAnimation(animation);
-                }
-                return true;
-            }
-        });
-
-//        for (int i = 0; i < mRecyclerView.getChildCount(); i++){
-//            mRecyclerView.getChildAt(i).startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.right_to_left));
-//        }
-//        mRecyclerView.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.right_to_left));
-
-//        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
-//        mRecyclerView.addItemDecoration(new MyItemDecoration(getResources().
-//                getDimensionPixelSize(R.dimen.myPadding), 3));
     }
 
 
@@ -124,13 +105,53 @@ public class MovieReviewsListFragment extends BaseFragment
     }
 
     private void updateUi(List<Review> reviews) {
-        MovieReviewsAdapter adapter = new MovieReviewsAdapter(reviews);
-        mRecyclerView.setAdapter(adapter);
-        adapter.setOnClickListener((view, position) -> {
-            Intent intent = new Intent(getContext(), DetailsActivity.class);
-            intent.putExtra(DetailsActivity.KEY_REVIEW_INDEX, position);
-            startActivity(intent);
-        });
+        MovieReviewsAdapter adapter ;
+        if(mRecyclerView.getAdapter() == null){
+            adapter = new MovieReviewsAdapter(reviews);
+            if(!isAnimated){
+                startAnimation();
+            }
+            mRecyclerView.setAdapter(adapter);
+            adapter.setOnClickListener((view, position) -> {
+                Intent intent = new Intent(getContext(), DetailsActivity.class);
+                intent.putExtra(DetailsActivity.KEY_REVIEW_INDEX, position);
+                startActivity(intent);
+            });
+        }else {
+            adapter = (MovieReviewsAdapter) mRecyclerView.getAdapter();
+            adapter.updateList(reviews);
+            if(!isAnimating){
+                adapter.notifyDataSetChanged();
+            }
+        }
+    }
+
+    private void startAnimation() {
+        isAnimated = true;
+        mRecyclerView.getViewTreeObserver()
+                .addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                    @Override
+                    public boolean onPreDraw() {
+                        isAnimating = true;
+                        mRecyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
+                        for (int i = 0; i < mRecyclerView.getChildCount(); i++) {
+                            mRecyclerView.getChildAt(i).setTranslationX(mRecyclerView.getWidth());
+                            ViewPropertyAnimator animate = mRecyclerView.getChildAt(i).animate();
+                            if(i == mRecyclerView.getChildCount() - 1) {
+                                animate.withEndAction(() -> {
+                                    isAnimating = false;
+                                    mRecyclerView.getAdapter().notifyDataSetChanged();
+                                });
+                            }
+                            animate
+                                    .setDuration(600)
+                                    .setStartDelay(i * 100)
+                                    .translationX(0f)
+                                    .start();
+                        }
+                        return true;
+                    }
+                  });
     }
 
     @Override

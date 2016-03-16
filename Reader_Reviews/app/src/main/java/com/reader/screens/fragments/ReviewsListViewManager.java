@@ -1,5 +1,7 @@
 package com.reader.screens.fragments;
 
+import android.support.annotation.VisibleForTesting;
+
 import com.reader.api.ApiManager;
 import com.reader.models.db.Review;
 import com.reader.models.network.NetworkReview;
@@ -40,7 +42,8 @@ public class ReviewsListViewManager {
         mBaseFragment = null;
     }
 
-    private void getMoviesReviewsFromDb() {
+    @VisibleForTesting
+    public void getMoviesReviewsFromDb() {
         mBaseFragment.addSubscription(
                 RealmManager.allReviews()
                         .observeOn(AndroidSchedulers.mainThread())
@@ -50,7 +53,8 @@ public class ReviewsListViewManager {
         );
     }
 
-    private void getMoviesReviewsFromNetwork() {
+    @VisibleForTesting
+    public void getMoviesReviewsFromNetwork() {
         if (Utils.hasInternet(mBaseFragment.getContext())) {
             mReviewsListView.hideRetry();
             mReviewsListView.loader();
